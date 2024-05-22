@@ -1,11 +1,13 @@
 /*
  ===================== program by Alireza Salehi Zadeh ==================
- ================================ 1403 / 2 / X ==========================
+ ================================ 1403 / 3 / 2    =======================
+ ================================    5 / 22/ 2024 ==========================
  keyword for finding section : $  dollor sign
  each person record takes 26 bytes | maximum people can fit in uno eeprom : 39
  wiring shcematic can be use in the program direcory
  this version is sipmpler coding style then first version
     so I tried to write less methods then last version
+  Copyright 2024 by Alireza Salehi Zadeh
 */
 
 #include <LiquidCrystal_I2C.h> // for lcd
