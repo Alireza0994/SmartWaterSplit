@@ -170,7 +170,9 @@ void setup() {
 void loop() {
   
   LoopRFID();
-
+  //check for Stop The Process by end of Remaining Time or limitlength
+  if(UserStarts)
+    CheckTime();
   //time checking 
   if(UserStarts && lastMinute != now.minute()){
     if(!FirstTimeCheck){
@@ -646,25 +648,6 @@ void loop() {
         canShowMainForm = true;
         return;
       }
-      // if(CurrentPerson.dowLimit != 9)
-      // if((now.dayOfTheWeek() + 1) != CurrentPerson.dowLimit){
-      //   lcd.clear();
-      //   lcd.setCursor(0,0);
-      //   lcd.print("   You Can not use");
-      //   lcd.setCursor(0,1);
-      //   lcd.print("    Today :(");
-      //   delay(1500);
-      //   lcd.clear();
-      //   lcd.setCursor(0, 0);
-      //   lcd.print("  Allow Day is:");
-      //   lcd.setCursor(4, 1);
-      //   dowChecker(CurrentPerson.dowLimit);
-      //   delay(1500);
-      //   lcd.clear();
-      //   canShowMainForm = true;
-      //   Log("day of week is not alright");
-      //   return;
-      // }
       Log("now time is :");
       Log(String(Time));
       Log("limits start is :");
@@ -688,6 +671,30 @@ void loop() {
       else{
         startProccess();
         return;
+      }
+    }
+    int CheckForStop(){ //return 0 => Can resume using of pomp | 1 => Remain Time is = 0 | 2 = limit time reached
+      int Time = now.hour() * 60 + now.minute();
+      unsigned long fullTime = CurrentPerson.limitStart + CurrentPerson.limitLength * 60;
+      // int from = CurrentPerson.limitStart;
+      // int to = CurrentPerson.limitStart + CurrentPerson.limitLength;
+      int fromDay = CurrentPerson.dowLimit;
+      int toDay = fromDay + fromDay + (CurrentPerson.limitLength / 24 );
+      int fromTime = CurrentPerson.limitStart;
+      int toTime = (CurrentPerson.limitStart + (CurrentPerson.limitLength * 60)) - toDay * 24;
+
+      //When the conditions are not ok we quit the method so when all is good blow codes will run
+      if(CurrentPerson.remainingTime == 0){
+        return 1;
+      }
+      if(CurrentPerson.dowLimit != 9){
+        if(Time >= CurrentPerson.limitStart && Time <= toTime && (now.dayOfTheWeek() + 1) >= fromDay && (now.dayOfTheWeek() + 1) <= toDay){ 
+          return 0;
+        }
+        return 2;
+      }
+      else{
+        return 0;
       }
     }
     void errorStartProccess(){
@@ -1165,6 +1172,33 @@ void loop() {
 
       delay(50);
     }
+  }
+  void CheckTime(){
+    int stopres = CheckForStop();
+    if(stopres == 0)
+      return;
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("   Stoping...");
+    lcd.setCursor(0,1);
+    if(stopres == 1)
+      lcd.print("  Time Ended");
+    else 
+      lcd.print(" limit reached");
+    delay(700);
+    tone(11 , 600 , 500);
+    delay(100);
+    tone(11 , 500 , 400);
+    delay(100);
+    tone(11 , 800 , 500);
+    lcd.clear();
+    lcd.setCursor(0 , 1);
+    UserStarts = false;
+    HasTimer = false;
+    QueueTimer = 120;
+    QueueTimerState = true;
+    lastSecend = now.second();
+    EEPROM.put(readResult , CurrentPerson);
   }
 //pins section $
   void InitPins(){
