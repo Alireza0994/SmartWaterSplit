@@ -827,7 +827,13 @@ void loop() {
         lcd.clear();
         lcd.setCursor(0, 0);
         if(SaveState){
-          String msg = "T=" + String(person.limitStart / 60) + ":" + String(person.limitStart % 60) + " | L:" + String(person.limitLength);
+          char lhourChar[3];
+          char lminuteChar[3];
+          char llengthChar[4];
+          sprintf(lhourChar, "%02d", person.limitStart / 60);
+          sprintf(lminuteChar, "%02d", person.limitStart % 60);
+          sprintf(llengthChar, "%03d", person.limitLength);
+          String msg = "T=" + String(lhourChar) + ":" + String(lminuteChar) + " | L:" + String(llengthChar);
           lcd.print(msg);
         }
         else
@@ -913,7 +919,11 @@ void loop() {
     lcd.clear();
     if(SaveState)
     {
-      String msg = "H:" + String(person.remainingTime / 60) + " | M:" + String(person.remainingTime % 60);
+      char hourChar[5];
+      char minuteChar[3];
+      sprintf(hourChar, "%04d", person.remainingTime / 60);
+      sprintf(minuteChar, "%02d", person.remainingTime % 60);
+      String msg = "H:" + String(hourChar) + " | M:" + String(minuteChar);
       lcd.print(msg);
     }
     else
