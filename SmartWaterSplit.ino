@@ -199,6 +199,7 @@ void loop() {
           HasTimer = false;
           QueueTimer = 120;
           QueueTimerState = true;
+          pastMinutes = 0;
           lastSecend = now.second();
           EEPROM.put(readResult , CurrentPerson);
         }
@@ -229,7 +230,7 @@ void loop() {
       digitalWrite(PompTriggerPin, HIGH);
       PompState = false;
       QueueTimer = 120;
-      
+      pastMinutes = 0;
     }
     lastSecend = now.second();
   }
@@ -265,6 +266,7 @@ void loop() {
       HasTimer = false;
       QueueTimer = 120;
       QueueTimerState = true;
+      pastMinutes = 0;
       lastSecend = now.second();
       EEPROM.put(readResult , CurrentPerson);
       //TODO Check Saf To Stop and Timer 2 minuts
@@ -1207,6 +1209,7 @@ void loop() {
     HasTimer = false;
     QueueTimer = 120;
     QueueTimerState = true;
+    pastMinutes = 0;
     lastSecend = now.second();
     EEPROM.put(readResult , CurrentPerson);
   }
