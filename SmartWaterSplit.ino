@@ -8,7 +8,7 @@
  this version is sipmpler coding style then first version
     so I tried to write less methods then last version
   Copyright 2024 by Alireza Salehi Zadeh
-  Thankyou
+  Thankyou | i am happy to use git
 */
 
 #include <LiquidCrystal_I2C.h> // for lcd
