@@ -23,7 +23,7 @@ The good Feature of this project are:
     >   > 18:30       > Allow zone > 18:30 + 100 hours
     >   > this means for example the user can use water from 18:30 to 100 hours after this time // 100 hours after this time means the user is Allowed to use water from 18:30 to 100 hours (4 days and 4 hours). After this time or before Limit Start time, the user is not allowed to use water and the system accrues an error.
     > * Remaining Time: the Total Time of allowed usage of water (the user get this amount from the master. master can set the data of users and can recharge the total amount of Remain Time.    
-    > <mark>***The Code of structure EEPRerson // stands for EEPROM Person:***</mark>
+    > ==***The Code of structure EEPRerson // stands for EEPROM Person:***==
     > ```cpp
     >   struct EEPerson {
     >       unsigned long rfid;         // 8 digits
